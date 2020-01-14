@@ -4,8 +4,6 @@ install_load("data.table", "gdata", "synapser", "jsonlite")
 install_load("plyr", "tidyverse", "doMC", "scales", "data.table")
 install_load("gridExtra", "ggthemes", "anytime")
 
-
-
 # To be able to run this script you will need to run the "loadData.R" script in the same folder and save the output
 load("tmp_digitalHealth_retentiondata.RData")
 

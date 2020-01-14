@@ -1,3 +1,7 @@
+################################
+# Longutidinal daily engagement patterns - unsupervised clustering
+################################
+
 rm(list=ls())
 options(stringsAsFactors = F)
 library("install.load")
