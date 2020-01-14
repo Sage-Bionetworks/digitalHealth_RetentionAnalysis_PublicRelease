@@ -288,3 +288,11 @@ userStats <- userStats %>%
                                        '(59,120]' = '60+')))
 
 
+
+
+nrow(userStats)
+
+##Save a local copy of the data to avoid reloading the time-consuming data prep for every downstream scripts
+save.image('tmp_digitalHealth_retentiondata.RData')
+
+

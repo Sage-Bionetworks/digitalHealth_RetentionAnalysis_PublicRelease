@@ -6,8 +6,8 @@ install_load("gridExtra", "ggthemes", "anytime")
 synapser::synLogin()
 
 
-#Load Data
-load(synGet('syn18941815')$path)
+# To be able to run this script you will need to run the "loadData.R" script in the same folder and save the output
+load("tmp_digitalHealth_retentiondata.RData")
 
 
 #################################################
@@ -16,8 +16,8 @@ load(synGet('syn18941815')$path)
 
 #Add the per study N
 demogMissingness_summary <- userStats %>% 
-  dplyr::select(healthCode,study,  age_group, gender, race, state) %>%
-  tidyr::gather(demog, demogVal, c('age_group', 'gender', 'race', 'state')) %>%
+  dplyr::select(healthCode,study,  age_group, gender, race_ethnicity, state) %>%
+  tidyr::gather(demog, demogVal, c('age_group', 'gender', 'race_ethnicity', 'state')) %>%
   dplyr::group_by(study) %>% 
   dplyr::mutate(per_study_N = n_distinct(healthCode)) %>%
   dplyr::filter(demogVal == 'NA/Missing') %>%
@@ -49,8 +49,6 @@ p <- p + scale_x_discrete( breaks =c('state', 'race', 'gender', 'age_group'),
                       labels = c('State', 'Race/Ethnicity', 'Sex', 'Age'))
 p <- p + theme(legend.title = element_blank())
 p
-ggsave("Figs_N_Tables/missingDemographics.png", plot=p, height = 5, width = 8, dpi = 200)
-ggsave("Figs_N_Tables/missingDemographics.tiff", plot=p, height = 5, width = 8, dpi = 200)
 
 
 demogMissingTable <- demogMissingness_summary %>%
@@ -58,4 +56,3 @@ demogMissingTable <- demogMissingness_summary %>%
   dplyr::select(-per_study_N, -n, -percentMissing) %>%
   tidyr::spread(study, value, fill=0)
 head(demogMissingTable)
-write.table(demogMissingTable, file = "Figs_N_Tables/demogMissingness_stats.tsv", row.names = F, quote=F, sep="\t")
